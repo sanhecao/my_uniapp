@@ -4,12 +4,14 @@
 		<view class="thum-mask">
 			<image class="cover cover-100 img-mask" mode="aspectFill" :src="thumb"></image>
 		</view>
+		<!--标题  -->
 		<view class="data-h fd">
 			<view class="title padding-bottom-sm solid-bottom"> {{ title }}</view>
+			<!-- <uni-title type="h2" :title="title"></uni-title> -->
 			<view class="margin-top-sm">
 				<view class="cu-capsule round">
 					<view class='cu-tag bg-gray '> <text class='cuIcon-time'></text></view>
-					<view class="cu-tag line-gray"><uni-icons type="flag"></uni-icons>{{time}}</view>
+					<view class="cu-tag line-gray">{{time}}</view>
 				</view>
 				<view class="cu-capsule round">
 					<view class='cu-tag bg-blue '><text class='cuIcon-attention'></text></view>
@@ -23,12 +25,15 @@
 					<view class='cu-tag bg-green'><text class='cuIcon-message'></text></view>
 					<view class="cu-tag line-green"> {{commentsNum}}</view>
 				</view>
+				<!-- <view>
+					<uni-fav star="true" :checked="true"></uni-fav>
+				</view> -->
 			</view>
 		</view>
 	
 		<view class="padding margin-top bg-white radius-c solids-bottom ">
 			<view class="margin-xs" v-if="!isPay">
-				{{content}}
+				<rich-text :nodes="content" style="font-size: 14px;word-break:break-all;"></rich-text> 
 				<!-- <u-parse :content="content" @preview="preview($event)" @navigate="navigate"></u-parse> -->
 			</view>
 		<!-- 	<view class="margin-xs  pay" v-else>
@@ -41,11 +46,12 @@
 				<button class="cu-btn cuIcon line-red round lg padding" @click="showModal">
 					<text class="cuIcon-likefill xl"></text>
 				</button>
-				<view class="margin-top">愣着干嘛，还TM不点赞！</view>
+				<view class="margin-top">喜欢就点赞(～￣▽￣)～！</view>
 			</view>
 		</view>
 	
 		<!-- ⬇⬇⬇⬇下面的可以设置成网络数据，我就不设置了 -->
+		<!-- 作者介绍 -->
 		<view class="cu-card article author">
 			<view class="cu-item shadow">
 				<view class="title">
@@ -54,7 +60,7 @@
 				</view>
 				<view class="flex">
 					<view class="flex-sub">
-						<image src="../../static/logo.jpg" mode="widthfix" class="cu-avatar xl margin-left-lg solids round"></image>
+						<image src="../../static/logo.png" mode="widthfix" class="cu-avatar xl margin-left-lg solids round"></image>
 					</view>
 					<view class="flex-twice">
 						<view class="padding-bottom-sm"><text class="cuIcon-title text-red margin-right-sm"></text>名称：{{author}}</view>
@@ -64,8 +70,8 @@
 				</view>
 			</view>
 		</view>
-	
-		<view class="" v-if="showshare!=0">
+	    <!-- 评论列表 -->
+		<view class="" v-if="showshare!=1">
 			<view class="cu-bar">
 				<view class="action">
 					<text class="cuIcon-titles text-brown"></text>
@@ -94,7 +100,7 @@
 				<button class=" bg-white margin">文章暂无评论</button>
 			</view>
 	
-	
+			<!-- 评论输入框 -->
 			<view class="margin-bottom">
 				<view class="cu-bar margin-top-sm">
 					<view class="action">
@@ -153,22 +159,22 @@
 		</view>
 	</view>
 	
-	<!-- <view class="margin-bottom-xl"></view> -->
-	
+	<view class="margin-bottom-xl"></view>
+	<!-- 加载界面 -->
 	<view class="cu-load load-modal" v-if="loadModal">
 		<view class="cuIcon-emojifill text-orange"></view>
 		<view class="gray-text">加载中...</view>
 	</view>
-	
+	<!-- 点赞弹窗 -->
 	<view class="cu-modal" :class="modalName=='Image'?'show':''">
 		<view class="cu-dialog">
-			<view class="bg-img" style="background-image: url('https://tuku.ycygame.cn/anhaowu/shoutu.png');height:200upx;">
+			<!-- <view class="bg-img" style="background-image: url('https://tuku.ycygame.cn/anhaowu/shoutu.png');height:200upx;">
 				<view class="cu-bar justify-end text-white">
 					<view class="action" @click="hideModal">
 						<text class="cuIcon-close "></text>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="bg-white padding solids-bottom">非常感谢您的支持，送你小♥ ♥！</view>
 			<view class="cu-bar bg-white">
 				<view class="action margin-0 flex-sub  solid-left" @click="hideModal">我知道了</view>
@@ -178,11 +184,11 @@
 	</view>
 </template>
 <script>
-	import marked from 'marked'
-	//import uParse from '@/components/gaoyia-parse/parse.vue'
+	//import marked from 'marked'
+	// import uParse from '@/components/feng-parse/parse.vue'
 	const API = require('../../utils/api');
 	const wxRequst = require('../../utils/wxRequest.js');
-
+    import htmlparser from '../../utils/html-parser.js'
 	export default {
 		mounted() {
 			uni.setNavigationBarTitle({
@@ -219,7 +225,7 @@
 			}
 		},
 		components: {
-		//	uParse
+			//uParse
 		},
 		onLoad(res) {
 			console.log(res)
@@ -246,12 +252,12 @@
 					success: function(res) {
 						var a = res.data.data;
 						//that.article = a;
-						//console.log(that.article);
-					//	that.content=that.article.text;
-						that.content = marked(a.text)
+						console.log(a.text,htmlparser(a.text));
+						//that.content=a.text;
+						that.content = htmlparser(a.text);
 						that.title = a.title;
 						that.showshare = a.showshare;
-						that.thumb = a.thumb[0].str_value;
+						that.thumb = a.thumb[0];
 						that.time = a.time;
 						that.likes = a.likes;
 						that.views = a.views;
@@ -475,7 +481,7 @@
 		position: relative;
 		padding: 40rpx 24rpx;
 		box-shadow: 2rpx 4rpx 40rpx #c2c2c2;
-		z-index: 999;
+		z-index: 1;
 		margin-top: -60rpx;
 		margin-bottom: 24rpx;
 		margin-left: 24rpx;
@@ -519,5 +525,8 @@
 			border: none;
 		}
 
+	}
+	.code{
+		color: text-red;
 	}
 </style>

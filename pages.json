@@ -2,7 +2,7 @@
 	"pages": [{
 		"path": "pages/index/index",		
 		"style": {			
-			   "navigationBarTitleText": "Blossom的世界"							
+			   "navigationBarTitleText": "Blossom的笔记"							
 		    } 
 		}   
         ,{
@@ -14,13 +14,13 @@
         ,{
             "path" : "pages/travel/travel",
             "style" : {
-				"navigationBarTitleText": "旅行"
+				"navigationBarTitleText": "看世界"
 			}
         }
         ,{
             "path" : "pages/study/study",
             "style" : {
-				"navigationBarTitleText": "学习"
+				"navigationBarTitleText": "程序媛"
 			}
         }
 		,{
@@ -28,11 +28,17 @@
             "style" : {
 			//	"navigationBarTitleText": "文章"
 			}
-        }
+        },
+		{
+			"path":"pages/about/about",
+			"style":{
+				"navigationStyle":"custom"
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "Blossom的世界",
+		"navigationBarTitleText": "Blossom的笔记",
 		"navigationBarBackgroundColor": "#c9afff",
 		"enablePullDownRefresh":true,//开启下拉刷新	
 		"backgroundColor": "#FFFFFF",
@@ -69,27 +75,27 @@
 	        "selectedColor": "#f33e54",
 	        "list": [{
 	                "pagePath": "pages/index/index",
-	              //  "iconPath": "static/img/tabbar/home.png",
-	              //  "selectedIconPath": "static/img/tabbar/homeactive.png",
+	                "iconPath": "static/home.png",
+	                "selectedIconPath": "static/homeactive.png",
 	                "text": "首页"
 	            },
 	            {
 	                "pagePath": "pages/study/study",
-	                //"iconPath": "static/img/tabbar/guanzhu.png",
-	               // "selectedIconPath": "static/img/tabbar/guanzhuactive.png",
-	                "text": "写代码"
+	                "iconPath": "static/code.png",
+	                "selectedIconPath": "static/codeactive.png",
+	                "text": "程序媛"
 	            },
 	         
 	            {
 	                "pagePath": "pages/travel/travel",
-	               // "iconPath": "static/img/tabbar/add.png",
-	               // "selectedIconPath": "static/img/tabbar/addactive.png",
-	                "text": "旅行"
+	                "iconPath": "static/travel.png",
+	                "selectedIconPath": "static/travelactive.png",
+	                "text": "看世界"
 	            },	      
 	            {
 	                "pagePath": "pages/study/study",
-	              //  "iconPath": "static/img/tabbar/add.png",
-	              //  "selectedIconPath": "static/img/tabbar/addactive.png",
+	                "iconPath": "static/run.png",
+	                "selectedIconPath": "static/runavtive.png",
 					 "text": "运动"
 	            },	     
 	            // {
@@ -99,9 +105,9 @@
 	            //     "text": "美食"
 	            // },
 	            {
-	                "pagePath": "pages/study/study",
-	               // "iconPath": "static/img/tabbar/me.png",
-	               // "selectedIconPath": "static/img/tabbar/meactive.png",
+	                "pagePath": "pages/about/about",
+	                "iconPath": "static/my.png",
+	                "selectedIconPath": "static/myactive.png",
 	                "text": "关于我"
 	            }
 	        ]

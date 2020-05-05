@@ -34,10 +34,10 @@ function requestMock(requestHandler){
 	var data=requestHandler.data;
 	var url=requestHandler.url;
 	var method=requestHandler.method;
-	console.log(url);
+	//console.log(url);
 	mockList[url]({}).then(res=>{
 	//mockList.GetPosts({}).then(res=>{
-				console.log('mockList',res.data.data);
+				console.log(url,res.data.data);
 				//this.resData=res.data.data
 				requestHandler.success(res);
 				//console.log(JSON.stringify(res, null, 4))
